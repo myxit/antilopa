@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 using Microsoft.EntityFrameworkCore;
+using Npgsql.EntityFrameworkCore;
 using AntilopaApi.Models;
 
 namespace AntilopaApi
@@ -28,7 +29,7 @@ namespace AntilopaApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AntilopaDbContext>(opt => opt.UseInMemoryDatabase("AntilopaApiData"));
+            services.AddDbContext<AntilopaDbContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

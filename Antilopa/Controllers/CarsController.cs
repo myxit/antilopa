@@ -17,13 +17,6 @@ namespace AntilopaApi.Controllers
         public CarsController(AntilopaDbContext context)
         {
             _context = context;
-
-            if (_context.Cars.Count() == 0)
-            {
-                _context.Cars.Add(new Car { Id = 1, Nickname = "white lightning"} );
-                _context.Cars.Add(new Car { Id = 2, Nickname = "carrot"} );
-                _context.SaveChanges();
-            }
         }
 
         [HttpGet]
@@ -52,13 +45,11 @@ namespace AntilopaApi.Controllers
             return CreatedAtAction(nameof(Get), new {id = car.Id}, car);
         }
 
-        // PUT api/values/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/values/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Car>> Delete(int id)
         {
