@@ -10,5 +10,6 @@ namespace AntilopaApi.Models
 
         public DbSet<Owner> Owners {get; set;}
         public DbSet<Car> Cars { get; set; }
+        public DbSet<Maintenance> Maintenance { get; set; }
     }
 }
