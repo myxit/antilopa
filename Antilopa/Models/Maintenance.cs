@@ -1,6 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
-
+using Microsoft.EntityFrameworkCore.Metadata;
 namespace AntilopaApi.Models
 {
     public class Maintenance {
@@ -11,10 +11,10 @@ namespace AntilopaApi.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime CreatedAt { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime UpdatedAt { get; set; }
-        public DateTime PlannedFrom { get; set; }
-        public DateTime PlannedTo { get; set; }
+
+        public DateTime? PlannedFrom { get; set; }
+        public DateTime? PlannedTo { get; set; }
         public virtual Car Car {get; set;}
     }    
 }

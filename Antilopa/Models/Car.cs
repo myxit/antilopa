@@ -14,7 +14,6 @@ namespace AntilopaApi.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime CreatedAt { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime UpdatedAt { get; set; }
         public virtual Owner Owner {get; set;}
         public ICollection<Maintenance> Maintenance { get; set; }
