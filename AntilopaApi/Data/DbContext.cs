@@ -1,10 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace AntilopaApi.Models
+namespace AntilopaApi.Data
 {
-    public class AntilopaDbContext: DbContext
+    public class ApplicationDbContext: DbContext
     {
-        public AntilopaDbContext(DbContextOptions<AntilopaDbContext> options): base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options): base(options)
         {
         }
 

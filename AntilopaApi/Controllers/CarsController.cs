@@ -3,43 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using AntilopaApi.Data;
 using AntilopaApi.Models;
+using AntilopaApi.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace AntilopaApi.Controllers
 {
-
-    public class CarService {
-        private readonly AntilopaDbContext _context;
-
-        public CarService(AntilopaDbContext context)
-        {
-            _context = context;
-        }
-
-        public async Task<Tuple<int, Car>> MakeForUpdate(int id, CarInputModel inputModel) {            
-            var res = await this._context.Cars.FindAsync(id);
-            if (res == null) {
-                return new Tuple<int, Car>(1, null);
-            }
-
-            res.Nickname = inputModel.Nickname;
-            res.RegistrationNr = inputModel.RegistrationNr;
-            res.Model = inputModel.Model;
-            res.PicUrl = inputModel.PicUrl;
-            res.UpdatedAt = new DateTime();
-            return new Tuple<int, Car>(0, res);
-        }
-    }
-
     [Route("api/[controller]")]
     [ApiController]
     public class CarsController : ControllerBase
     {
-        private readonly AntilopaDbContext _context;
+        private readonly ApplicationDbContext _context;
         private readonly CarService carService;
 
-        public CarsController(AntilopaDbContext context, CarService carService)
+        public CarsController(ApplicationDbContext context, CarService carService)
         {
             _context = context;
             this.carService = carService;
@@ -66,7 +44,7 @@ namespace AntilopaApi.Controllers
         public async Task<ActionResult<Car>> Post([FromQuery] int id, [FromBody] CarInputModel inputModel)
         {
             var readResult = await this.carService.MakeForUpdate(id, inputModel);
-            if (readResult.Item1 != 0) {
+            if (!readResult.isSuccess) {
                 return BadRequest();
             }
 

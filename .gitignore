@@ -2,4 +2,6 @@ Antilopa/obj/*
 Antilopa/bin/*
 .vscode/
 node_modules/
+bin/
+obj/
 

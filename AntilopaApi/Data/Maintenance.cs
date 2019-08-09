@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore.Metadata;
-namespace AntilopaApi.Models
+namespace AntilopaApi.Data
 {
     public class Maintenance {
         public int Id {get; set;}

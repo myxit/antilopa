@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using AntilopaApi.Models;
+using AntilopaApi.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace AntilopaApi.Controllers
@@ -12,9 +12,9 @@ namespace AntilopaApi.Controllers
     [ApiController]
     public class MaintenanceController : ControllerBase
     {
-        private readonly AntilopaDbContext _context;
+        private readonly Data.ApplicationDbContext _context;
 
-        public MaintenanceController(AntilopaDbContext context)
+        public MaintenanceController(Data.ApplicationDbContext context)
         {
             _context = context;
         }

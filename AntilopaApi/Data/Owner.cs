@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AntilopaApi.Models
+namespace AntilopaApi.Data
 {
     public class Owner {
         public int Id {get;set;}
