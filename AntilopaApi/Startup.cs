@@ -16,6 +16,7 @@ using Npgsql.EntityFrameworkCore;
 using AntilopaApi.Data;
 using AntilopaApi.Infrastructure;
 using AntilopaApi.Services;
+using AutoMapper;
 
 namespace AntilopaApi
 {
@@ -34,6 +35,7 @@ namespace AntilopaApi
             services.AddDbContext<ApplicationDbContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddScoped<CarService>();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             // Register the Swagger services
             services.AddSwaggerDocument();

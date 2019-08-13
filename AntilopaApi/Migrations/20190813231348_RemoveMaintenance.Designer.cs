@@ -3,15 +3,17 @@ using System;
 using AntilopaApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Antilopa.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class AntilopaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190813231348_RemoveMaintenance")]
+    partial class RemoveMaintenance
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

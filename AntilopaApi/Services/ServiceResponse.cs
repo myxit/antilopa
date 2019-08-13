@@ -13,7 +13,7 @@ namespace AntilopaApi.Services
         }
 
         public static ServiceResponse<T> Success(T instance) {
-            return new ServiceResponse<T>(ServiceOpCodes.BAD_INPUT, instance);
+            return new ServiceResponse<T>(ServiceOpCodes.SUCCESS, instance);
         }
         public bool isSuccess { get { return this.Item1 == ServiceOpCodes.SUCCESS; } }
 

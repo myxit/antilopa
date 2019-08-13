@@ -5,6 +5,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using AntilopaApi.Data;
+using AntilopaApiTest.Helpers;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace AntilopaApiTest
 {
