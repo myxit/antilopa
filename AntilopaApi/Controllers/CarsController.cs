@@ -8,6 +8,7 @@ using AntilopaApi.Models;
 using AntilopaApi.Services;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AntilopaApi.Controllers
 {
@@ -26,6 +27,7 @@ namespace AntilopaApi.Controllers
             this._mapper = mapper;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<CarViewModel[]>> Get()
         {
@@ -34,6 +36,7 @@ namespace AntilopaApi.Controllers
             return this._mapper.Map<Car[], CarViewModel[]>(cars); 
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<CarViewModel>> Get(int id)
         {
@@ -45,6 +48,7 @@ namespace AntilopaApi.Controllers
             return this._mapper.Map<Car, CarViewModel>(data);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<Car>> Post([FromBody] CarInputModel inputModel)
         {
@@ -56,6 +60,7 @@ namespace AntilopaApi.Controllers
             return CreatedAtAction(nameof(Get), this._mapper.Map<Car, CarViewModel>(insResult.Item2));
         }
 
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult> Put([FromRoute] int id, [FromBody] CarInputModel inputModel)
         {
@@ -67,6 +72,7 @@ namespace AntilopaApi.Controllers
             return NoContent();
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult<Car>> Delete(int id)
         {

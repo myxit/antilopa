@@ -17,6 +17,13 @@ using AntilopaApi.Data;
 using AntilopaApi.Infrastructure;
 using AntilopaApi.Services;
 using AutoMapper;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using NSwag.Generation.Processors.Security;
+using NSwag;
+using System.Net;
 
 namespace AntilopaApi
 {
@@ -33,12 +40,48 @@ namespace AntilopaApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+
+            // ===== Add Jwt Authentication ========
+            var key = Encoding.UTF8.GetBytes(Configuration["JwtKey"]);
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddScoped<CarService>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             // Register the Swagger services
-            services.AddSwaggerDocument();
+            services.AddSwaggerDocument(document =>
+            {
+                document.Title = "cars management API";
+                document.Description = "Swagger UI for testing";
+                // Add an authenticate button to Swagger for JWT tokens
+                document.OperationProcessors.Add(new OperationSecurityScopeProcessor("JWT Token"));
+                document.AddSecurity("JWT Token", Enumerable.Empty<string>(),
+                    new OpenApiSecurityScheme()
+                    {
+                        Type = OpenApiSecuritySchemeType.ApiKey,
+                        Name = nameof(Authorization),
+                        In = OpenApiSecurityApiKeyLocation.Header,
+                        Description = "Copy this into the value field: Bearer {token}"
+                    }
+                );
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,6 +103,7 @@ namespace AntilopaApi
             app.UseSwaggerUi3();
 
             app.UseHttpsRedirection();
+            app.UseAuthentication();
             app.UseMvc();
         }
     }
